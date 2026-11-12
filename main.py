@@ -21,6 +21,16 @@ def get_valid_int(prompt: str, min_val: int, max_val: int) -> int:
         return value
 
 
+def get_non_empty_str(prompt: str) -> str:
+    """앞뒤 공백을 제거하고 빈 문자열 입력을 방지하는 공통 문자열 입력 함수"""
+    while True:
+        raw = input(prompt).strip()
+        if not raw:
+            print("⚠️ 입력이 비어 있습니다. 내용을 입력하세요.")
+            continue
+        return raw
+
+
 def print_menu() -> None:
     print("\n========================================")
     print("        🎯 나만의 상식 퀴즈 게임 🎯")
@@ -62,6 +72,20 @@ def play_quiz(quizzes: list[Quiz]) -> int:
     return score
 
 
+def add_quiz(quizzes: list[Quiz]) -> None:
+    """사용자로부터 문제, 선택지 4개, 정답을 입력받아 새 퀴즈 등록"""
+    print("\n📌 새로운 퀴즈를 추가합니다.\n")
+    question = get_non_empty_str("문제를 입력하세요: ")
+    choices = [
+        get_non_empty_str(f"선택지 {i}: ")
+        for i in range(1, 5)
+    ]
+    answer = get_valid_int("정답 번호 (1-4): ", 1, 4)
+
+    quizzes.append(Quiz(question=question, choices=choices, answer=answer))
+    print("\n✅ 퀴즈가 추가되었습니다!")
+
+
 def main() -> None:
     quizzes = get_default_quizzes()
     print(f"📚 기본 상식 퀴즈 {len(quizzes)}문제가 준비되었습니다.")
@@ -74,7 +98,7 @@ def main() -> None:
             if choice == 1:
                 play_quiz(quizzes)
             elif choice == 2:
-                print("📌 [준비 중] 퀴즈 추가 기능")
+                add_quiz(quizzes)
             elif choice == 3:
                 print("📋 [준비 중] 퀴즈 목록 기능")
             elif choice == 4:
