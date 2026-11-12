@@ -86,6 +86,19 @@ def add_quiz(quizzes: list[Quiz]) -> None:
     print("\n✅ 퀴즈가 추가되었습니다!")
 
 
+def show_quiz_list(quizzes: list[Quiz]) -> None:
+    """등록된 모든 퀴즈 목록 출력"""
+    if not quizzes:
+        print("\n⚠️ 등록된 퀴즈가 없습니다.")
+        return
+
+    print(f"\n📋 등록된 퀴즈 목록 (총 {len(quizzes)}개)")
+    print("----------------------------------------")
+    for idx, quiz in enumerate(quizzes, start=1):
+        print(f"[{idx}] {quiz.question}")
+    print("----------------------------------------")
+
+
 def main() -> None:
     quizzes = get_default_quizzes()
     print(f"📚 기본 상식 퀴즈 {len(quizzes)}문제가 준비되었습니다.")
@@ -100,7 +113,7 @@ def main() -> None:
             elif choice == 2:
                 add_quiz(quizzes)
             elif choice == 3:
-                print("📋 [준비 중] 퀴즈 목록 기능")
+                show_quiz_list(quizzes)
             elif choice == 4:
                 print("🏆 [준비 중] 점수 확인 기능")
             elif choice == 5:
