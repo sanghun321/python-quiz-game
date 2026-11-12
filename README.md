@@ -49,3 +49,5 @@ python-quiz-game/
   "best_score": 100
 }
 ```
+
+- 원격 저장소 clone 및 pull 동기화 검증 완료
