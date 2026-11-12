@@ -1,3 +1,6 @@
+from quiz import get_default_quizzes
+
+
 def get_valid_int(prompt: str, min_val: int, max_val: int) -> int:
     """공백 제거, 빈 입력, 숫자 변환, 범위 검증을 수행하는 공통 입력 함수"""
     while True:
@@ -31,6 +34,9 @@ def print_menu() -> None:
 
 
 def main() -> None:
+    quizzes = get_default_quizzes()
+    print(f"📚 기본 상식 퀴즈 {len(quizzes)}문제가 준비되었습니다.")
+
     try:
         while True:
             print_menu()

@@ -40,3 +40,34 @@ class Quiz:
             choices=[str(c) for c in data["choices"]],
             answer=int(data["answer"]),
         )
+
+
+def get_default_quizzes() -> list[Quiz]:
+    """기본 제공 상식 퀴즈 5문제 리스트 반환"""
+    return [
+        Quiz(
+            question="대한민국의 표준시(KST)는 협정 세계시(UTC)보다 몇 시간 빠른가요?",
+            choices=["7시간", "8시간", "9시간", "10시간"],
+            answer=3,
+        ),
+        Quiz(
+            question="태양계에서 가장 큰 행성은 무엇인가요?",
+            choices=["지구", "화성", "목성", "토성"],
+            answer=3,
+        ),
+        Quiz(
+            question="물의 화학식으로 올바른 것은 무엇인가요?",
+            choices=["CO2", "H2O", "O2", "NaCl"],
+            answer=2,
+        ),
+        Quiz(
+            question="세계에서 면적이 가장 넓은 대륙은 어디인가요?",
+            choices=["아프리카", "유럽", "북아메리카", "아시아"],
+            answer=4,
+        ),
+        Quiz(
+            question="훈민정음을 창제한 조선의 왕은 누구인가요?",
+            choices=["태조", "세종대왕", "정조", "영조"],
+            answer=2,
+        ),
+    ]
