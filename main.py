@@ -43,11 +43,11 @@ def print_menu() -> None:
     print("========================================")
 
 
-def play_quiz(quizzes: list[Quiz]) -> int:
-    """저장된 퀴즈를 출제하고 채점 결과를 반환"""
+def play_quiz(quizzes: list[Quiz], best_score: int | None) -> int | None:
+    """저장된 퀴즈를 출제하고 채점 및 최고 점수 갱신 결과 반환"""
     if not quizzes:
         print("\n⚠️ 등록된 퀴즈가 없습니다. 먼저 퀴즈를 추가해 주세요.")
-        return 0
+        return best_score
 
     total = len(quizzes)
     correct_count = 0
@@ -68,8 +68,13 @@ def play_quiz(quizzes: list[Quiz]) -> int:
     score = round((correct_count / total) * 100)
     print("\n========================================")
     print(f"🏆 결과: {total}문제 중 {correct_count}문제 정답! ({score}점)")
+
+    if best_score is None or score > best_score:
+        best_score = score
+        print("🎉 새로운 최고 점수입니다!")
+
     print("========================================")
-    return score
+    return best_score
 
 
 def add_quiz(quizzes: list[Quiz]) -> None:
@@ -99,8 +104,18 @@ def show_quiz_list(quizzes: list[Quiz]) -> None:
     print("----------------------------------------")
 
 
+def show_best_score(best_score: int | None) -> None:
+    """현재까지 기록된 최고 점수 출력"""
+    if best_score is None:
+        print("\n⚠️ 아직 퀴즈를 풀지 않았습니다. 먼저 퀴즈를 풀어보세요!")
+        return
+
+    print(f"\n🏆 최고 점수: {best_score}점")
+
+
 def main() -> None:
     quizzes = get_default_quizzes()
+    best_score: int | None = None
     print(f"📚 기본 상식 퀴즈 {len(quizzes)}문제가 준비되었습니다.")
 
     try:
@@ -109,13 +124,13 @@ def main() -> None:
             choice = get_valid_int("선택: ", 1, 5)
 
             if choice == 1:
-                play_quiz(quizzes)
+                best_score = play_quiz(quizzes, best_score)
             elif choice == 2:
                 add_quiz(quizzes)
             elif choice == 3:
                 show_quiz_list(quizzes)
             elif choice == 4:
-                print("🏆 [준비 중] 점수 확인 기능")
+                show_best_score(best_score)
             elif choice == 5:
                 print("👋 퀴즈 게임을 종료합니다. 감사합니다!")
                 break
